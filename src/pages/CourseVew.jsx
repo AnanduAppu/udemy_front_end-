@@ -1,10 +1,51 @@
-import { useState, useContext } from "react";
+import axios from "axios";
+import { useState, useContext, useEffect } from "react";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import Clintcontex from "../createContex/Createcontex";
+
+
 const CourseView = () => {
-  const { courseView, setCourseView } = useContext(Clintcontex);
+  const { courseView,cartData,setCartData,userData,Courses, reviewDis} = useContext(Clintcontex);
+ 
+  const navigate = useNavigate()
 
-  console.log(courseView);
 
+  const addingtoCart = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const AddProduct = Courses.find(ele => ele._id === courseView._id);
+      const checkProduct = cartData.find(ele => ele._id === courseView._id);
+  
+      if (checkProduct) {
+        toast.error("Product already in cart");
+      } else {
+        const courseId =courseView._id;
+        console.log(courseId,userData)
+        setCartData((prevCart) => [...prevCart, AddProduct]);
+  
+        const backendResponse = await axios.post('http://localhost:4001/user/addToCart', {
+          courseId,
+          userData
+        });
+  
+        if (backendResponse.data && backendResponse.data.successful) {
+          toast.success(backendResponse.data.message);
+          
+          //window.location.reload();
+          navigate('/user/cart')
+          //setCartStatus()
+        } else {
+          toast.error("Failed to add to cart. Please try again.");
+          
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error occurred. Please try again later.");
+    }
+  };
 
   if (!courseView) {
     return (
@@ -16,7 +57,7 @@ const CourseView = () => {
 
   return (
     <>
-      <div className="relative m-2 mx-4 h-56 w-auto border border-black bg-slate-700">
+      <div className="relative m-2 mx-4 h-56 w-auto border border-black bg-slate-700 ">
         <div className="ml-16 w-[60%] bg-slate-700 h-32 mt-14">
           <hr className="bg-black " />
           <h1 className="text-4xl mx-8 text-white mb-3 mt-3">{courseView.title}</h1>
@@ -24,8 +65,8 @@ const CourseView = () => {
         </div>
       </div>
 
-      <div className="flex mb-8">
-        <div className="relative z-10 ml-4 w-[70%] border border-black h-[48vh] px-8 shadow-x2">
+      <div className="flex mb-8 ml-2 h-full">
+        <div className="relative z-10 ml-4 w-[70%] border border-black  px-8 shadow-x2 ]">
           <p className="my-2 ">
             <span className="font-bold">Description:-{courseView.description}</span>
             <span className="mx-2"> </span>
@@ -39,26 +80,31 @@ const CourseView = () => {
             <span className="mx-2"> </span>
           </p>
 
-          <div className="mt-8 border border-black block">
+          <div className="mt-8 border border-slate-500 block overflow-auto m-5">
             <h1 className="font-bold mx-5 text-2xl">Reviews</h1>
-            <div className="block mx-2 my-2 p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <h5 className="mb-2  font-bold tracking-tight text-gray-900 dark:text-white">
-                Noteworthy technology acquisitions 2021
-              </h5>
-              <p className="font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order
-              </p>
+            {reviewDis.length===0?<div>No Reviews</div>:reviewDis.map((ele,ind)=>(
+              <>
+                          <article className="p-3 my-4 border border-slate-400 rounded-lg mx-5">
+            <div className="flex items-center mb-4">
+              <img className="w-10 h-10 me-4 rounded-full" src={ele.reviewer.profileimg} alt="" />
+              <div className="font-medium dark:text-white">
+                <p>{ele.reviewer.name}</p>
+              </div>
             </div>
-            <div className="block mx-2 my-2 p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-              <h5 className="mb-2  font-bold tracking-tight text-gray-900 dark:text-white">
-                Noteworthy technology acquisitions 2021
-              </h5>
-              <p className="font-normal text-gray-700 dark:text-gray-400">
-                Here are the biggest enterprise technology acquisitions of 2021
-                so far, in reverse chronological order
-              </p>
-            </div>
+            <time dateTime="2017-05-03 19:00">{ele.createdAt.slice(0,7)}</time>
+            <p className="mb-2 text-gray-500 dark:text-gray-400">{ele.comment}</p>
+
+            <aside>
+            
+              <div className="flex items-center mt-3">
+              <a href="#" className={`px-2 py-1.5 text-xs font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 ${ ele. reviewer._id === userData._id ? "" : "hidden"}`}>Edi</a>
+              </div>
+              </aside>
+             </article>
+              </>
+      ))}
+
+             
           </div>
         </div>
 
@@ -77,7 +123,9 @@ const CourseView = () => {
                   Price:{courseView.price}
                 </h5>
               </a>
-              <button className="py-2 px-16 border border-black block my-3 mx-auto text-center text-white font-bold bg-purple-500 hover:bg-purple-800">
+              <button className="py-2 px-16 border border-black block my-3 mx-auto text-center text-white font-bold bg-purple-500 hover:bg-purple-800"
+              onClick={(e)=>addingtoCart(e)}
+              >
                 Buy Now
               </button>
 

@@ -1,16 +1,19 @@
-
 import ReactPlayer from "react-player";
 
-import { useContext,useState  } from 'react'
+import { useContext, useState } from "react";
 import Clintcontex from "../../createContex/Createcontex";
 
-function VideoGallery() {
-  const {mylearningStream} =useContext(Clintcontex);
+import { Link, Outlet } from "react-router-dom";
 
-console.log(mylearningStream)
-const [selectVideo,setSelectVideo]=useState( mylearningStream.videos[0])
-const [selectedVideo, setSelectedVideo] = useState(mylearningStream.videos.length > 0 ? mylearningStream.videos[0] : null);
-// Store the selected video
+function VideoGallery() {
+  const { mylearningStream,setCorseReview} = useContext(Clintcontex);
+  setCorseReview( mylearningStream._id) 
+
+  const [selectVideo, setSelectVideo] = useState(mylearningStream.videos[0]);
+  const [selectedVideo, setSelectedVideo] = useState(
+    mylearningStream.videos.length > 0 ? mylearningStream.videos[0] : null
+  );
+  // Store the selected video
 
   const handleVideoClick = (video) => {
     setSelectVideo(video); // Update the selected video state
@@ -41,13 +44,14 @@ const [selectedVideo, setSelectedVideo] = useState(mylearningStream.videos.lengt
             <div className="sm:ml-1">
               <div className="flex h-[70vh] flex-wrap items-center justify-start gap-x-4 rounded border border-black bg-gray-50 dark:bg-gray-800 overflow-y-auto">
                 {/* Dynamically map video data and handle click events */}
-                
-                  
+
                 <div className="lg:border-l lg:pl-2 ">
                   {mylearningStream.videos.map((video, ind) => (
                     <div
                       className={`flex items-start mb-3 pb-3 border border-black ${
-                        selectVideo === video ? "bg-gray-200 dark:bg-gray-700" : ""
+                        selectVideo === video
+                          ? "bg-gray-200 dark:bg-gray-700"
+                          : ""
                       }`}
                       onClick={() => handleVideoClick(video)}
                       key={ind}
@@ -62,40 +66,44 @@ const [selectedVideo, setSelectedVideo] = useState(mylearningStream.videos.lengt
                         ></div>
                       </div>
                       <div className="text-sm w-[350px]">
-                        <p className="text-gray-800 text-xs font-bold pb-2 pt-2">part: {ind + 1}</p>
+                        <p className="text-gray-800 text-xs font-bold pb-2 pt-2">
+                          part: {ind + 1}
+                        </p>
                         <p className="text-gray-900 font-medium hover:text-indigo-600 text-center leading-none">
-                          {mylearningStream.title} 
+                          {mylearningStream.title}
                         </p>
                       </div>
                     </div>
                   ))}
                 </div>
-                
-             
               </div>
             </div>
           </div>
         </div>
 
-        {/* Second Row */}
-        <div className="rounded-lg border-2 border-dashed border-gray-200 p-4 dark:border-gray-700 mt-4">
-          <div className="grid grid-cols-3">
-            <div className="flex h-80 items-center justify-center rounded border border-black bg-gray-50 dark:bg-gray-800 col-span-2">
-              <p className="text-2xl text-gray-400 dark:text-gray-500"></p>
-            </div>
-
-            <div className="sm:ml-1">
-              <div className="flex h-80 items-center justify-center rounded border border-black bg-gray-50 dark:bg-gray-800">
-                <p className="text-2xl text-gray-400 dark:text-gray-500">
-         
-   
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        
+  
       </div>
-    </>
+  <div className="flex mb-2">
+  
+  <div className="w-[63.5%]  h-[50vh] border border-black ms-10 rounded-lg">
+    <div className='px-6 '>
+      <Link to='yournotes' className="mx-2 px-4 py-2 border border-slate-400 hover:border-black hover:text-purple-800">Add Notes</Link> 
+      <Link to='addReview' className="mx-2 px-4 py-2 border border-slate-400 hover:border-black hover:text-purple-800">Add Review</Link>
+      <Link to ='userReviews' className="mx-2 px-4 py-2 border border-slate-400 hover:border-black hover:text-purple-800"> User Reviews</Link>
+    </div>
+    
+
+    <div className="w-[90%]  mx-8  ">
+                          <Outlet/>
+    </div>
+
+  </div>
+  <div cclassName="w-[30%]"></div>
+
+</div>
+    
+  </>
   );
 }
 

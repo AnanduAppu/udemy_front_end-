@@ -21,7 +21,7 @@ const AdminLog = () => {
       }
   
       try {
-        const response = await axios.post('http://localhost:4001/user/admin/login', {username,password});
+        const response = await axios.post('http://localhost:4001/user/admin/login', {username,password},{ withCredentials: true });
        
         if(response.data.success){
             
@@ -31,7 +31,7 @@ const AdminLog = () => {
         }
         
       } catch (error) {
-        console.error('Login failed:', error.message);
+        console.log('Login failed:', error.message);
         toast.error('Login failed. Please try again.');
       }
     };    

@@ -30,6 +30,9 @@ import CourseGallery from "./pages/AdminIn/CourseGallery";
 import ProfileSettings from "./pages/AdminIn/ProfileSettings";
 import OrderDetails from "./pages/AdminIn/orderData";
 import DisplayAllCrs from "./pages/DisplayAllCrs";
+import Yournotes from "./pages/userProfile/Yournotes";
+import ReviewForm from "./pages/Reviews/reviewForm";
+import UserReview from "./pages/Reviews/UserReview";
 
 
 
@@ -48,6 +51,7 @@ function App() {
   const [myLearnings,setMylearnings] = useState([])
   const [mylearningStream,setMyLearnStream] =  useState({})
   const [Adminlog,setAdminlog]=useState('')
+  const [courseidForReview,setCorseReview] = useState('')
 
   // data getting from cookies after refresh
 
@@ -288,6 +292,9 @@ const [DataStatus,setDataStatus] = useState({})
 
 
 //
+
+const [reviewDis,setReviewDis]=useState([]);
+
 const data={
   userData,
   setUserData,
@@ -326,57 +333,67 @@ const data={
   setMylearnings,
   mylearningStream,
   setMyLearnStream,
+
+
+  courseidForReview,
+  setCorseReview,
+
+
   DataStatus,
   setDataStatus,
   setAdminlog,
-  Adminlog
+  Adminlog,
+
+  reviewDis,
+  setReviewDis
+
 }
   return (
     <>
     <Toaster />
-    <Clintcontex.Provider value={data}>
-      <Routes>
-        <Route path="/" element={<Assemble/>}>
-        <Route index element={<Homepage/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
+<Clintcontex.Provider value={data}>
+  <Routes>
+    <Route path="/" element={<Assemble/>}>
+      <Route index element={<Homepage/>}/>
+      <Route path="/login" element={<Login/>}/>
+      <Route path="/signup" element={<SignUp/>}/>
 
-        {/* protected routes */}
-        <Route path="/signup/varify/otp" element={<Otpvarificaiton/>}/>
-        <Route path="/login/emailvarify" element={<Resetpass/>}/>
-        <Route path="/login/emailvarify/resetpass" element={<ResetPass2/>}/>
-        <Route path="/singnup/emailreg" element={<EmailRegPassSeting/>}/>
-        <Route path="singup/varify" element={<VarMailorPhon/>}/>
-        <Route path="/user/cart" element={<CartSection/>}/>
-        <Route path="/user/wishlist" element={<Wishlist/>}/>
-        <Route path = "/courseView" element={<CourseView/>}/>
-        {/* protected routes */}
-       
-        <Route path = "/videoPlayer" element={<VideoGallery/>}/>
-        <Route path = "/ViewAllCrs" element={<DisplayAllCrs/>}/>
-        
+      {/* protected routes */}
+      <Route path="/signup/varify/otp" element={<Otpvarificaiton/>}/>
+      <Route path="/login/emailvarify" element={<Resetpass/>}/>
+      <Route path="/login/emailvarify/resetpass" element={<ResetPass2/>}/>
+      <Route path="/signup/emailreg" element={<EmailRegPassSeting/>}/>
+      <Route path="/signup/varify" element={<VarMailorPhon/>}/>
+      <Route path="/user/cart" element={<CartSection/>}/>
+      <Route path="/user/wishlist" element={<Wishlist/>}/>
+      <Route path="/courseView" element={<CourseView/>}/>
+      {/* protected routes */}
+
+      <Route path="/videoPlayer" element={<VideoGallery/>}>
+        <Route path="yournotes" element={<Yournotes/>}/>
+        <Route path="addReview" element={<ReviewForm/>}/>
+        <Route path="userReviews" element={<UserReview/>}/>
       </Route>
-        
-        <Route path= "/user/userpage" element={ <UserProfile/>} >
-         <Route index element={<Profile/>}/>
-         <Route path="/user/userpage/mylecture" element={<Mylecture/>}/>
-         <Route path="/user/userpage/mylearings" element={<MyLearnings/>}/>
 
-        </Route>
-        <Route path= "/user/Adminlogin" element={ <AdminLog/>} />
-        <Route path= "/adminIn" element={ <MainPage/>} >
-         <Route index element={<MainContent/>}/>
-         <Route path="/adminIn/users" element={<Userpage/>}/>
-         <Route path="/adminIn/courses" element={<CourseGallery/>}/>
-         <Route path="/adminIn/order" element={<OrderDetails/>}/>
-         <Route path="/adminIn/profile" element={<ProfileSettings/>}/>
-         
+      <Route path="/ViewAllCrs" element={<DisplayAllCrs/>}/>
+    </Route>
 
-        </Route>
-      </Routes>
-      
-      
-      </Clintcontex.Provider>
+    <Route path="/user/userpage" element={<UserProfile/>} >
+      <Route index element={<Profile/>}/>
+      <Route path="mylecture" element={<Mylecture/>}/>
+      <Route path="mylearings" element={<MyLearnings/>}/>
+    </Route>
+
+    <Route path="/adminlog" element={<AdminLog/>} />
+    <Route path="/adminIn" element={<MainPage/>}>
+      <Route index element={<MainContent/>}/>
+      <Route path="users" element={<Userpage/>}/>
+      <Route path="courses" element={<CourseGallery/>}/>
+      <Route path="order" element={<OrderDetails/>}/>
+      <Route path="profile" element={<ProfileSettings/>}/>
+    </Route>
+  </Routes>
+</Clintcontex.Provider>
     </>
   );
 }

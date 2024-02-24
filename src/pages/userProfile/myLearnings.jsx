@@ -37,7 +37,7 @@ function MyLearnings() {
 
             <div key={ind} className="p-2 m-2 border border-black rounded-lg">
             <span className="flex h-54 w-44  rounded-full mx-2">
-              <img src={ele.thumbnail} alt="" />
+              <img className='h-54 w-44' src={ele.thumbnail} alt="" />
             </span>
             <h1 className="my-2">Title:-{ele.title}</h1>
             <p className="my-2">Author:-</p>

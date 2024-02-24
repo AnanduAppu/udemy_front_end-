@@ -17,9 +17,10 @@ function DisplayCourses() {
 
   const navigate = useNavigate()
 
-const {Courses,setCartStatus,cartData,setCartData,userData,showWishlistIcon, WishStaus,setWishStatus,
+const {Courses,cartData,setCartData,userData,showWishlistIcon,
   WishData,
-  setWishData,setCourseView } = useContext(Clintcontex)
+  setWishData,setCourseView , 
+  setReviewDis} = useContext(Clintcontex)
 console.log(Courses)
 const [selectedCategory, setSelectedCategory] = useState("All courses");
 
@@ -119,10 +120,23 @@ const viewCourse = async (e, id) => {
     });
     if (backendResponse.data && backendResponse.data.success) {
       toast.success(backendResponse.data.message);
-
+ 
       // Update the course details with data from the backend response
       findCourse.name = backendResponse.data.DataName;
       findCourse.email = backendResponse.data.DataEmail;
+
+
+      const response = await axios.get(`http://localhost:4001/user/showReview`, {
+            headers: { id }
+          });
+          if (response.data.success) {
+            
+            setReviewDis(response.data.review);
+            console.log(response.data.review)
+          } else {
+            console.error("Failed to fetch reviews:", response.data.message);
+          }
+
 
       // Set the updated course details in state and navigate to courseView
       setCourseView(findCourse);

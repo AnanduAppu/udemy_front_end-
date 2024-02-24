@@ -9,9 +9,8 @@ import { useState } from "react";
 function UserProfile() {
 
 // my learning class showing
-const {setMylearnings,userData} =useContext(Clintcontex);
+const {setMylearnings,userData,myLearnings} =useContext(Clintcontex);
 
-const [bol,setBol] = useState(false)
 useEffect(()=>{
   async function fetchCourses(){
     try {
@@ -30,12 +29,18 @@ useEffect(()=>{
    
       }
     } catch (error) {
-      alert(error.message || 'Failed to load');
+      console.log("errore")
     }
   }
-  fetchCourses()
+  
 
-},[userData])
+  if(userData){
+    fetchCourses();
+  }
+
+},[userData]);
+
+
   return (
     <>
       <Nav />

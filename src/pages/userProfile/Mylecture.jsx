@@ -219,6 +219,13 @@ function MyLecture() {
     return text;
   };
 
+  const truncateChar = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    }
+    return text;
+};
+
   //*course edit and delete area
 
   const [isFormOpen, setFormOpen] = useState(false);
@@ -534,7 +541,7 @@ const [DeleteCourse,setDeleteCourse] = useState('')
 
       {/* display thumbline image */}
       <div
-        className={`ml-72 overflow-auto w-[70%] h-[65vh]  p-8 mt-24 border border-slate-400 \ ${
+        className={`ml-72 overflow-auto w-[70%] h-[65vh]  px-4 mt-24 border border-slate-400 \ ${
           opendivgallery ? "hidden" : ""
         }`}
         >
@@ -544,12 +551,12 @@ const [DeleteCourse,setDeleteCourse] = useState('')
             {/* Card 1 */}
             <div className="rounded overflow-hidden shadow-lg">
               <a className="cursor-pointer" onClick={(e) => handleThumbnail(e, course._id)}> 
-              <img className="w-full" src={course.thumbnail} alt="Mountain" />
+              <img className="w-72 h-40" src={course.thumbnail} alt="Mountain" />
               </a>
               <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2">{course.title}</div>
+                <div className="font-bold text-xl mb-2">{truncateChar(course.title, 16)}</div>
                 <p className="text-gray-700 text-base">
-                {truncateText(course.description, 5)}
+                {truncateText(course.description, 4)}
                 </p>
               </div>
               <div className="px-6 pt-2 pb-2 w-72"> 

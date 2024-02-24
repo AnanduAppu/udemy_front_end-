@@ -1,11 +1,50 @@
 import React from "react";
-
 import Clintcontex from "../../createContex/Createcontex";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+useNavigate
 
 function Wishlist() {
-  const { WishData, userData } = useContext(Clintcontex);
+  const navigate = useNavigate()
+  const { WishData, Courses,cartData,setCartData,userData } = useContext(Clintcontex);
+
+  const addingtoCart = async (e,id) => {
+    e.preventDefault();
+  
+    try {
+      const AddProduct = Courses.find(ele => ele._id === id);
+      const checkProduct = cartData.find(ele => ele._id === id);
+  
+      if (checkProduct) {
+        toast.error("Product already in cart");
+      } else {
+        const courseId =id;
+        console.log(courseId,userData)
+        setCartData((prevCart) => [...prevCart, AddProduct]);
+  
+        const backendResponse = await axios.post('http://localhost:4001/user/addToCart', {
+          courseId,
+          userData
+        });
+  
+        if (backendResponse.data && backendResponse.data.successful) {
+          toast.success(backendResponse.data.message);
+          
+          //window.location.reload();
+          navigate('/user/cart')
+          //setCartStatus()
+        } else {
+          toast.error("Failed to add to cart. Please try again.");
+        
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error occurred. Please try again later.");
+    }
+  };
 
   const removeItem = async (e, id) => {
     e.preventDefault();
@@ -72,7 +111,9 @@ function Wishlist() {
               </td>
               <td className="border px-4 py-2 text-right font-bold "><span className="mt-10">₹{cart.price}</span> </td>
               <td className="border px-4 py-2 text-right">
-                <button className="bg-slate-800 hover:bg-slate-950 text-white font-bold py-2 px-4 rounded mt-10">
+                <button className="bg-slate-800 hover:bg-slate-950 text-white font-bold py-2 px-4 rounded mt-10"
+                onClick={(e)=>addingtoCart(e,cart._id)}
+                >
                   ADD TO CART
                 </button>
               </td>
