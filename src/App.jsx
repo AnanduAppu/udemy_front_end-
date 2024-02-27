@@ -378,7 +378,7 @@ const data={
       <Route path="/ViewAllCrs" element={<DisplayAllCrs/>}/>
     </Route>
 
-    <Route path="/user/userpage" element={<UserProfile/>} >
+    <Route path="/user/userpage/" element={<UserProfile/>} >
       <Route index element={<Profile/>}/>
       <Route path="mylecture" element={<Mylecture/>}/>
       <Route path="mylearings" element={<MyLearnings/>}/>

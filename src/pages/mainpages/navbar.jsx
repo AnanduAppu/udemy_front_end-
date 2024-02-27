@@ -8,7 +8,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Clintcontex from "../../createContex/Createcontex";
-import { useContext,useRef, useState } from "react";
+import { useContext, useState } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import axios from "axios";
 import { toast } from "react-hot-toast";
@@ -17,7 +17,7 @@ import { toast } from "react-hot-toast";
 function Navbar() {
   const { auth, setauth,cartStaus,setSearchInput,searchinput,Search,setSearch,showWishlistIcon,setWishlistIcon } = useContext(Clintcontex);
 
-
+const navigate = useNavigate()
   const clearCookie = (cookieName) => {
     document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   };
@@ -40,7 +40,11 @@ function Navbar() {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  }
   return (
     <div className="relative">
       <header className=" py-3 w-full bg-white shadow-xl ring-1 ring-slate-900/5">
@@ -55,7 +59,54 @@ function Navbar() {
             />
           </Link>
           <ul className="flex justify-between space-x-5 ">
-            <li className="pt-2">Categories</li>
+         <li className="pt-2 relative" > <button  onClick={toggleDropdown}>Categories
+         </button> 
+         <svg
+          className={`w-2.5 h-2.5 ms-3 ${isOpen ? 'transform rotate-180' : ''}`}
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
+        >
+          <path
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+        {isOpen && (
+        <div
+          id="dropdown"
+          className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute top-full left-0 mt-1"
+        >
+          <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+            <li>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Photography
+              </a>
+            </li>
+            <li>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              web development
+              </a>
+            </li>
+            <li>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Python
+              </a>
+            </li>
+            <li>
+              <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              Trading
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+         
+         </li>
             <li>
               <span className="my-10  pl-[5px] py-[13px] rounded-full border-slate-500 border-2">
                 <button>
@@ -114,7 +165,8 @@ function Navbar() {
                   className="py-2 px-3 font-bold"
                   style={{ fontSize: "14px" }}
                 >
-                  <a>
+                  <a onClick={()=>navigate('/user/userpage/mylearings')}>
+
                     <MenuBookIcon />
                   </a>
                 </span>
@@ -141,7 +193,9 @@ function Navbar() {
               </li>
             </div>
           </ul>
+
         </nav>
+
       </header>
 
       

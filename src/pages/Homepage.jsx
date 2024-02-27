@@ -3,6 +3,10 @@
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DisplayCourses from './DisplayCourses';
+import image1 from '../assets/carouselimg1.jpg'
+import image2 from '../assets/carouselimg2.jpg'
+import image3 from '../assets/carouselimg3.jpeg'
+import Bottompage from './Bottompage';
 
 
 function Homepage() {
@@ -16,7 +20,7 @@ function Homepage() {
 {/* ............................carousel area..................... */}
 <Carousel className='my-4'>
       <Carousel.Item>
-      <img src="https://img-c.udemycdn.com/notices/web_carousel_slide/image/316ce2f8-6204-4df3-ba14-8acf2a6d53b6.jpg" alt="a image" className="mx-auto border border-black"/>
+      <img src={image1} alt="a image" className="mx-auto border border-black"/>
         <Carousel.Caption>
         <div className="carousel-caption text-white position-absolute bottom-40 start-0 py-10 w-96 text-start font-bold  bg-black bg-opacity-70 border-2 rounded-lg">
           <h3 className='mx-2'>level up your skills, make better future </h3>
@@ -26,7 +30,7 @@ function Homepage() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-      <img src="https://img-c.udemycdn.com/notices/home_carousel_slide/image/aeff3b43-25ab-4d9e-bc86-0da688e3a9df.jpg" alt="a image" className="mx-auto"/>
+      <img src={image2} alt="a image" className="mx-auto"/>
         <Carousel.Caption>
         <div className="carousel-caption text-white position-absolute bottom-40 start-0 py-10 w-96 text-start font-bold  bg-black bg-opacity-70 border rounded-lg">
           <h3 className='mx-2'>level up your skills, make better future </h3>
@@ -36,7 +40,7 @@ function Homepage() {
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
-      <img src="https://img-c.udemycdn.com/notices/home_carousel_slide/image/12c0830f-aa27-4843-993d-b440aa389991.jpeg" alt="a image" className="mx-auto" />
+      <img src={image3} alt="a image" className="mx-auto" />
         <Carousel.Caption>
         <div className="carousel-caption text-white position-absolute bottom-40 start-0 py-10 w-96 text-start font-bold  bg-black bg-opacity-70 border rounded-lg">
           <h3 className='mx-2'>level up your skills, make better future </h3>
@@ -68,6 +72,10 @@ function Homepage() {
 
 {/* courses which we providing */}
 <DisplayCourses/>
+
+
+
+<Bottompage/>
 </>
         
 

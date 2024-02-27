@@ -1,15 +1,29 @@
 import { useEffect,useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet,useNavigate } from "react-router-dom";
 import Nav from "./nav";
 import Clintcontex from "../../createContex/Createcontex";
 import axios from "axios";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 
 function UserProfile() {
-
+const navigate = useNavigate()
 // my learning class showing
-const {setMylearnings,userData,myLearnings} =useContext(Clintcontex);
+const {setMylearnings,userData,myLearnings,setauth} =useContext(Clintcontex);
+
+const clearCookie = (cookieName) => {
+  document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  navigate('/')
+};
+
+const handlelogOut = (e)=>{
+  e.preventDefault()
+  clearCookie("token");
+  toast.success("logout success")
+  setauth(false);
+  navigate('/')
+}
 
 useEffect(()=>{
   async function fetchCourses(){
@@ -88,23 +102,7 @@ useEffect(()=>{
                 </span>
               </Link>
             </li>
-            {/* <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 20 18"
-                >
-                  <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
-              </a>
-            </li> */}
+
             <li>
               <Link
                 to="/user/userpage/mylecture"
@@ -146,7 +144,7 @@ useEffect(()=>{
                     d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"
                   />
                 </svg>
-                <span className="flex-1 ms-3 whitespace-nowrap">Sign Out</span>
+                <span className="flex-1 ms-3 whitespace-nowrap" onClick={(e)=>handlelogOut(e)} >Sign Out</span>
               </a>
             </li>
           </ul>

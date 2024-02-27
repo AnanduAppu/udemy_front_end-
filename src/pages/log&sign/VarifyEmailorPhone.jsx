@@ -22,6 +22,7 @@ const navigate = useNavigate ()
   };
 
   return (
+
     <div className="border border-black-200 mx-48 my-10">
       <div className="mx-auto text-center px-9 py-9">
         <div>

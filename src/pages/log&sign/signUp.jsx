@@ -47,7 +47,7 @@ function SignUp() {
         
         // axios.post("http://localhost:4001/user/otpsend",formData)
         //   .then((res)=>console.log(res) ).catch((err)=>console.log(err))
-          navigate("/singup/varify")
+          navigate("/signup/varify")
   }};
 
 
