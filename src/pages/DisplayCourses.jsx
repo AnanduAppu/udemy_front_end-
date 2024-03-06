@@ -50,7 +50,21 @@ const addingtoCart = async (e, id) => {
     } else {
       const courseId = id;
       console.log(courseId,userData)
-      setCartData((prevCart) => [...prevCart, AddProduct]);
+      
+      const existingLecture = userData.mylecture.includes(courseId)
+      const existingLearning = userData.mylearnings.includes(courseId)
+
+
+      if (existingLecture) {
+      toast.error("course alredy in your mylecture")
+      return
+        }
+    if (existingLearning) {
+        toast.error("course alredy in your learnings")
+        return
+        }
+
+        setCartData((prevCart) => [...prevCart, AddProduct]);
 
       const backendResponse = await axios.post('http://localhost:4001/user/addToCart', {
         courseId,
@@ -59,6 +73,7 @@ const addingtoCart = async (e, id) => {
 
       if (backendResponse.data && backendResponse.data.successful) {
         toast.success(backendResponse.data.message);
+        
         window.location.reload();
         //setCartStatus()
       } else {
@@ -83,7 +98,20 @@ const addingtoWishlist = async (e, id) => {
       toast.error("Product already in cart");
     } else {
       const courseId = id;
-      console.log(courseId,userData)
+   
+
+      const existingLecture = userData.mylecture.includes(courseId)
+      const existingLearning = userData.mylearnings.includes(courseId)
+
+
+      if (existingLecture) {
+      toast.error("course alredy in your mylecture")
+      return
+        }
+    if (existingLearning) {
+        toast.error("course alredy in your learnings")
+        return
+        }
       setWishData((prevWish) => [...prevWish, AddWish]);
 
       const backendResponse = await axios.post('http://localhost:4001/user/addToWishlist', {

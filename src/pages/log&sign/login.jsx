@@ -91,6 +91,7 @@ const navigate = useNavigate()
             >
               Signin
             </button>
+            <p>No account? new here? <Link to="/signup" className='text-blue-600'> create one</Link></p>
           </form>
         </div>
       </div>

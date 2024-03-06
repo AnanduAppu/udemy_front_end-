@@ -23,6 +23,22 @@ const CourseView = () => {
       } else {
         const courseId =courseView._id;
         console.log(courseId,userData)
+        const existingLecture = userData.mylecture.includes(courseId)
+        const existingLearning = userData.mylearnings.includes(courseId)
+  
+  
+        if (existingLecture) {
+        
+         
+        toast.error("course alredy in your mylecture")
+        navigate('/user/userpage/mylecture')
+        return
+          }
+      if (existingLearning) {
+          toast.error("course alredy in your learnings")
+          navigate('/user/userpage/mylearings')
+          return
+          }
         setCartData((prevCart) => [...prevCart, AddProduct]);
   
         const backendResponse = await axios.post('http://localhost:4001/user/addToCart', {
@@ -138,6 +154,7 @@ const CourseView = () => {
               <a
                 href="#"
                 className="inline-flex items-center ml-4 rounded-lg bg-blue-700 px-3 py-2 my-2 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          
               >
                 Apply Coupen
                 <svg
