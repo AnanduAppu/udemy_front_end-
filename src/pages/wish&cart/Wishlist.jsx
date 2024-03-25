@@ -71,7 +71,7 @@ function Wishlist() {
     }
   };
   return (
-    <div className="container px-14 mt-8">
+    <div className="container px-14 mt-8 h-[60vh]">
       <table className="table w-full">
         <thead>
           <tr>

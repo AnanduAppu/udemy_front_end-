@@ -30,8 +30,8 @@ function MyLecture() {
 
   // display courses code end here
 
-  const cloudName = "djmrroluc";
-  const apiKey = "377863932456872";
+  const cloudName = import.meta.env.VITE_CLOUDNARY_CLOUDNAME;
+  const apiKey = import.meta.env.VITE_CLOUDNARY_APIKEY;
   const uploadPreset = "udemyVideo";
 
   const openAuthPopup = () => {

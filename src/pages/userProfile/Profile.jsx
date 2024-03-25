@@ -11,8 +11,8 @@ function Profile() {
   const [salary, setSalary] = useState('$10,000');
   const [inputFile,setinputFile] = useState(true)
 
-  const cloudName = "djmrroluc";
-  const apiKey = "377863932456872";
+  const cloudName = import.meta.env.VITE_CLOUDNARY_CLOUDNAME;
+  const apiKey = import.meta.env.VITE_CLOUDNARY_APIKEY;
  
   const uploadPreset = "userImage";
 
