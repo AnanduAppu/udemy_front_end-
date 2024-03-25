@@ -2,6 +2,7 @@ import React from 'react'
 import { useContext } from 'react'
 import Clintcontex from "../../createContex/Createcontex";
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 function MyLearnings() {
 
   const navigate = useNavigate()
@@ -10,13 +11,15 @@ function MyLearnings() {
 
   console.log(myLearnings);
 
-  const selectCourse = (id)=>{
+  const selectCourse = (id) => {
 
-    const selectedCourse = myLearnings.find(course => course._id === id);
+  const selectedCourse = myLearnings.find(course => course._id === id);
   if (selectedCourse) {
-    
-    setMyLearnStream(selectedCourse);
-    navigate("/videoPlayer")
+
+      setMyLearnStream(selectedCourse);
+      navigate("/videoPlayer")
+   
+ 
   } else {
     console.log(`Course with id ${id} not found`);
   }

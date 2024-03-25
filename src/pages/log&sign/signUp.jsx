@@ -45,8 +45,7 @@ function SignUp() {
     setUserData(formData)
       if (Object.keys(formData).length !== 0) {
         
-        // axios.post("http://localhost:4001/user/otpsend",formData)
-        //   .then((res)=>console.log(res) ).catch((err)=>console.log(err))
+    
           navigate("/signup/varify")
   }};
 
@@ -199,7 +198,7 @@ function SignUp() {
                         navigate("/login");
                       }else{
                         alert("need to insert password")
-                        navigate("/singnup/emailreg");
+                        navigate("/signup/emailreg");
                         
                       }
                     })

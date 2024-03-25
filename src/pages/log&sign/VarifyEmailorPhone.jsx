@@ -6,16 +6,18 @@ import { useNavigate } from "react-router-dom";
 function VarMailorPhon() {
   const { userData } = useContext(Clintcontex);
   console.log(userData)
+  const email = userData.email
+  const phone = userData.phone
 const navigate = useNavigate ()
   const handlePhoneVerification = () => {
-    axios.post("http://localhost:4001/user/Phoneotpsend", userData)
+    axios.post("http://localhost:4001/user/Phoneotpsend",  phone,{withCredentials:true})
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
       navigate("/signup/varify/otp")
   };
 
   const handleEmailVerification = () => {
-    axios.post("http://localhost:4001/user/Emailotpsend", userData)
+    axios.post("http://localhost:4001/user/Emailotpsend", { email},{withCredentials:true})
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
       navigate("/signup/varify/otp")

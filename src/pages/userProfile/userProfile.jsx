@@ -33,7 +33,7 @@ useEffect(()=>{
 
       const backendResponse = await axios.get(`http://localhost:4001/user/mylearnings`,{headers:{
         id:id
-      }});
+      }},{withCredentials:true});
 
       
       if (backendResponse.data.successful) {

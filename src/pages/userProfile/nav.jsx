@@ -1,8 +1,11 @@
 import logimg from "../../assets/Udemy New 2021.png"
 import { Link} from "react-router-dom";
+import Clintcontex from "../../createContex/Createcontex";
+import { useContext } from "react";
 
 
 function Nav() {
+  const {userData,setUserData} = useContext(Clintcontex)
   return (
  <>
 <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -29,10 +32,12 @@ function Nav() {
               <img src={logimg} className="h-8 me-3" alt="FlowBite Logo" />
               
             </Link>
+            
           </div>
           <div className="flex items-center">
             <div className="flex items-center ms-3">
               <div>
+             
                 <button
                   type="button"
                   className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -40,7 +45,9 @@ function Nav() {
                   data-dropdown-toggle="dropdown-user"
                 >
                   <span className="sr-only">Open user menu</span>
-                  <img className="w-9 h-9 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
+                 
+                  
+                  <img className="w-9 h-9 rounded-full" src={userData.profileimg} alt="user photo" />
                 </button>
               </div>
 

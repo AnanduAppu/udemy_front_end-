@@ -1,46 +1,47 @@
-import {useState, useContext} from 'react'
+import { useState, useContext } from "react";
 import Clintcontex from "../../createContex/Createcontex";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function EmailRegPassSeting() {
+  const { jwtres ,setauth} = useContext(Clintcontex);
 
-    const { jwtres } = useContext(Clintcontex);
+  const navigate = useNavigate();
+  let name = jwtres.name;
+  let email = jwtres.email;
 
-    const navigate = useNavigate()
-    let name = jwtres.name
-    let email = jwtres.email
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const togglePasswordVisibility = () => {
-      setPasswordVisible(!passwordVisible);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-    
-
-    const handleSubmit = (e)=>{
-        e.preventDefault();
-
-        if (password !== confirmPassword) {
-            alert('Password and Confirm Password do not match.');
-            return;
-          }
-
-        axios.post("http://localhost:4001/user/emailPasswordSetting",{name:name,email:email,password:password})
-                    .then((res) => {
-                      
-                      if (res.data.status === true) {
-                        alert(res.data.message)
-                        navigate("/");
-                      }
-                    })
-                    .catch((err) => {
-                      alert(err);
-                      
-                    });
+    if (password !== confirmPassword) {
+      alert("Password and Confirm Password do not match.");
+      return;
     }
+
+    axios
+      .post(
+        "http://localhost:4001/user/emailPasswordSetting",
+        { name: name, email: email, password: password },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.data.status === true) {
+          alert(res.data.message);
+          setauth(true);
+          navigate("/");
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   return (
     <div>
@@ -50,7 +51,7 @@ function EmailRegPassSeting() {
           <form className="flex flex-col mt-4">
             <div className="relative">
               <input
-                type={passwordVisible ? 'text' : 'password'}
+                type={passwordVisible ? "text" : "password"}
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -61,7 +62,7 @@ function EmailRegPassSeting() {
                 className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
                 onClick={togglePasswordVisibility}
               >
-                {passwordVisible ? '👁️' : '👁️‍🗨️'}
+                {passwordVisible ? "👁️" : "👁️‍🗨️"}
               </span>
             </div>
             <input
@@ -75,7 +76,7 @@ function EmailRegPassSeting() {
             <button
               type="submit"
               className="mt-4 px-4 py-3 leading-6 text-base rounded-md border border-transparent text-white focus:outline-none bg-blue-500 text-blue-100 hover:text-white focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer inline-flex items-center w-full justify-center items-center font-medium focus:outline-none"
-              onClick={(e)=>handleSubmit(e)}
+              onClick={(e) => handleSubmit(e)}
             >
               Set Password
             </button>
@@ -83,7 +84,7 @@ function EmailRegPassSeting() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default EmailRegPassSeting
+export default EmailRegPassSeting;

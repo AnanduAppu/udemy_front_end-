@@ -15,15 +15,26 @@ function Otpvarificaiton() {
   };
 
   const submitToServer = async () => {
+
+    const cookieToken = document.cookie.replace(/(?:(?:^|.*;\s*)userOtp\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+       
+    if (!cookieToken) {
+      toast.error("Token not found");
+      return;
+    }
+    const otptoken = jwtDecode(cookieToken);
+
+    console.log(otptoken)
+
     if (otp.trim() === "") {
       console.error("OTP is required");
       return;
     }
 
     try {
+
       const response = await axios.post("http://localhost:4001/user/signup", {
-        userData,
-        otp,
+        userData
       });
       console.log(response);
       if (response.data.success) {
